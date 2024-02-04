@@ -42,7 +42,7 @@ const getTripsList = (
       WHERE
          trip_active = true
          ${destination_id ? `and destination_id = ${destination_id}` : ""}
-         ${categoryString ? `and category_id && ARRAY[${categoryString}]` : ""}
+         ${categoryString ? `and category_id && ARRAY[${categoryString}]::bigint[]` : ""}
          ${price_from ? `and trip_price >= ${trip_price}` : ""}
          ${price_to ? `and trip_price <= ${price_to}` : ""}
          ${country_id ? `and country_id = ${country_id}` : ""}
@@ -50,7 +50,7 @@ const getTripsList = (
          ${start_date ? `and trip_start_date = ${start_date}` : ""}
          ${end_date ? `and trip_end_date = ${end_date}` : ""}
          ${trip_day ? `and trip_day = ${trip_day}` : ""}
-         ${hotelsString ? `and trip_hotels && ARRAY[${hotelsString}]` : ""}
+         ${hotelsString ? `and trip_hotels && ARRAY[${hotelsString}]::bigint[]` : ""}
          ${trip_hot ? `and trip_hot = ${trip_hot}` : ""}
       ORDER BY
          trip_id DESC
