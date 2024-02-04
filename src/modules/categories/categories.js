@@ -29,9 +29,16 @@ module.exports = {
 
    ADD_CATEGORY: async (req, res) => {
       try {
-         const { category_name } = req.bod
+         const uploadPhoto = req.file
+         const { category_name } = req.body
+         const imageUrl = `${process.env.BACKEND_URL}/${uploadPhoto?.filename}`
+         const imageName = `${uploadPhoto?.filename}`
 
-         const addCategory = await model.addCategory(category_name)
+         const addCategory = await model.addCategory(
+            category_name,
+            imageUrl,
+            imageName
+         )
 
          if (addCategory) {
             return res.status(200).json({
@@ -58,11 +65,32 @@ module.exports = {
 
    UPDATE_CATEGORY: async (req, res) => {
       try {
+         const uploadPhoto = req.file
          const { id, category_name } = req.body
          const foundCategory = await model.foundCategory(id)
+         let imageUrl = ''
+         let imageName = ''
 
          if (foundCategory) {
-            const updateCategory = await model.updateCategory(id, category_name)
+            if (uploadPhoto) {
+               if (foundCategory?.category_image_name) {
+                  const deleteOldAvatar = new FS(path.resolve(__dirname, '..', '..', '..', 'public', 'images', `${foundCategory?.category_image_name}`))
+                  deleteOldAvatar.delete()
+               }
+
+               imageUrl = `${process.env.BACKEND_URL}/${uploadPhoto?.filename}`
+               imageName = `${uploadPhoto?.filename}`
+            } else {
+               imageUrl = foundCategory?.category_image_url
+               imageName = foundCategory?.category_image_name
+            }
+
+            const updateCategory = await model.updateCategory(
+               id,
+               category_name,
+               imageUrl,
+               imageName
+            )
 
             if (updateCategory) {
                return res.status(200).json({
@@ -100,6 +128,11 @@ module.exports = {
          const foundCategory = await model.foundCategory(id)
 
          if (foundCategory) {
+            if (foundCategory?.category_image_name) {
+               const deleteOldAvatar = new FS(path.resolve(__dirname, '..', '..', '..', 'public', 'images', `${foundCategory?.category_image_name}`))
+               deleteOldAvatar.delete()
+            }
+
             const deleteCategory = await model.deleteCategory(id)
 
             if (deleteCategory) {

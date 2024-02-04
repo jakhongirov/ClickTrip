@@ -38,8 +38,8 @@ router
 
    // CATEGORIES API
    .get('/categories', categories.GET)
-   .post('/category/add', AUTH, categories.ADD_CATEGORY)
-   .put('/category/edit', AUTH, categories.UPDATE_CATEGORY)
+   .post('/category/add', AUTH, FileUpload.single("photo"), categories.ADD_CATEGORY)
+   .put('/category/edit', AUTH, FileUpload.single("photo"), categories.UPDATE_CATEGORY)
    .delete('/category/delete', AUTH, categories.DELETE_CATEGORY)
 
    // DESTINATIONS API

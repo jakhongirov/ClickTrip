@@ -28,6 +28,8 @@ CREATE TABLE destinations (
 CREATE TABLE categories (
    category_id bigserial PRiMARY KEY,
    category_name text not null,
+   category_image_url text,
+   category_image_name text,
    category_create_at timestamptz DEFAULT CURRENT_TIMESTAMP
 );
 
