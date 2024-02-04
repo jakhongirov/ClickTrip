@@ -152,6 +152,20 @@ module.exports = {
          const videosUrl = []
          const videosName = []
 
+         const start_date_parts = trip_start_date.split(".");
+         const start_day = parseInt(start_date_parts[0]);
+         const start_month = parseInt(start_date_parts[1]) - 1;
+         const start_year = parseInt(start_date_parts[2]);
+         const start_dateObject = new Date(start_year, start_month, start_day);
+         const start_date = start_dateObject.getTime() / 1000;
+
+         const end_date_parts = trip_end_date.split(".");
+         const end_day = parseInt(end_date_parts[0]);
+         const end_month = parseInt(end_date_parts[1]) - 1;
+         const end_year = parseInt(end_date_parts[2]);
+         const end_dateObject = new Date(end_year, end_month, end_day);
+         const end_date = end_dateObject.getTime() / 1000;
+
          if (uploadFile?.photos?.length > 0) {
             uploadFile?.photos?.forEach((e) => {
                imagesUrl.push(
@@ -179,8 +193,8 @@ module.exports = {
             trip_sale_price,
             trip_hot,
             JSON.parse(trip_hotels),
-            trip_start_date,
-            trip_end_date,
+            start_date,
+            end_date,
             country_id,
             city_id,
             trip_day,
@@ -238,6 +252,20 @@ module.exports = {
          const imagesName = []
          const videosUrl = []
          const videosName = []
+
+         const start_date_parts = trip_start_date.split(".");
+         const start_day = parseInt(start_date_parts[0]);
+         const start_month = parseInt(start_date_parts[1]) - 1;
+         const start_year = parseInt(start_date_parts[2]);
+         const start_dateObject = new Date(start_year, start_month, start_day);
+         const start_date = start_dateObject.getTime() / 1000;
+
+         const end_date_parts = trip_end_date.split(".");
+         const end_day = parseInt(end_date_parts[0]);
+         const end_month = parseInt(end_date_parts[1]) - 1;
+         const end_year = parseInt(end_date_parts[2]);
+         const end_dateObject = new Date(end_year, end_month, end_day);
+         const end_date = end_dateObject.getTime() / 1000;
 
          if (foundTrip) {
 
@@ -311,8 +339,8 @@ module.exports = {
                trip_sale_price,
                trip_hot,
                JSON.parse(trip_hotels),
-               trip_start_date,
-               trip_end_date,
+               start_date,
+               end_date,
                country_id,
                city_id,
                trip_day,
