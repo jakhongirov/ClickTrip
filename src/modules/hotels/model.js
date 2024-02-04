@@ -45,12 +45,7 @@ const getHotelList = (
          hotel_star
    `;
 
-   return fetchALL(
-      QUERY,
-      meal,
-      star,
-      destination_id
-   )
+   return fetchALL(QUERY)
 }
 const addHotel = (
    hotel_name,
