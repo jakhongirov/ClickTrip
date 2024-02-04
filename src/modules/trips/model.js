@@ -56,20 +56,7 @@ const getTripsList = (
          trip_id DESC
    `;
 
-   return fetchALL(
-      QUERY,
-      destination_id,
-      category_id,
-      price_from,
-      price_to,
-      country_id,
-      city_id,
-      start_date,
-      end_date,
-      trip_day,
-      hotels,
-      trip_hot
-   )
+   return fetchALL(QUERY)
 }
 const foundTrip = (id) => {
    const QUERY = `
