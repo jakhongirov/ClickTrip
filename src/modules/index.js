@@ -43,7 +43,7 @@ router
    .delete('/category/delete', AUTH, categories.DELETE_CATEGORY)
 
    // DESTINATIONS API
-   .get('/destinations', AUTH, destinations.GET)
+   .get('/destinations', destinations.GET)
    .post('/destination/add', AUTH, FileUpload.single("photo"), destinations.ADD_DESTINATION)
    .put('/destination/edit', AUTH, FileUpload.single("photo"), destinations.UPDATE_DESTINATION)
    .delete('/destination/delete', AUTH, destinations.DELETE_DESTINATION)
