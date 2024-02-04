@@ -58,7 +58,7 @@ module.exports = {
 
          const getTripsList = await model.getTripsList(
             destination_id,
-            JSON.parse(category_id),
+            category_id ? JSON.parse(category_id) : '',
             price_from,
             price_to,
             country_id,
@@ -66,7 +66,7 @@ module.exports = {
             start_date,
             end_date,
             trip_day,
-            JSON.parse(hotels),
+            hotels ? JSON.parse(hotels) : '',
             trip_hot
          )
 
