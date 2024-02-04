@@ -34,7 +34,7 @@ const getTripsList = (
       SELECT
          *
       FROM
-         trips
+         trips a
       WHERE
          trip_active = true
          ${destination_id ? `and destination_id = ${destination_id}` : ""}
@@ -48,6 +48,10 @@ const getTripsList = (
          ${trip_day ? `and trip_day = ${trip_day}` : ""}
          ${hotelsString ? `and trip_hotels && ARRAY[${hotelsString}]` : ""}
          ${trip_hot ? `and trip_hot = ${trip_hot}` : ""}
+      INNER JOIN
+         agencies b
+      ON
+         a.agency_id = b.agency_id
       ORDER BY
          trip_id DESC
    `;
@@ -93,6 +97,10 @@ const foundTrip = (id) => {
          fly_cities f
       ON
          a.city_id = f.city_id
+      INNER JOIN
+         agencies g
+      ON
+         a.agency_id = g.agency_id
       WHERE
          trip_id = $1
    `;
