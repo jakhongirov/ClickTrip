@@ -60,7 +60,7 @@ module.exports = {
             const foundTrip = await model.foundTrip(trip_id)
             const apiUrl = `https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage`;
             const message = `
-               name: ${user_name}%0Aphone: ${user_phone_number}%0ATrip name: ${foundTrip?.trip_name}Trip id: ${foundTrip?.trip_id}
+               name: ${user_name}\nphone: ${user_phone_number}\nTrip name: ${foundTrip?.trip_name}\nTrip id: ${foundTrip?.trip_id}
             `
             axios.post(apiUrl, {
                chat_id: process.env.CHAT_ID,
