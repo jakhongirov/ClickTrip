@@ -14,6 +14,18 @@ const getUsers = (limit, page) => {
 
    return fetchALL(QUERY)
 }
+const foundTrip = (trip_id) => {
+   const QUERY = `
+      SELECT
+         *
+      FROM
+         trips
+      WHERE
+         trip_id = $1
+   `;
+
+   return fetch(QUERY, trip_id)
+}
 const addUser = (
    user_name,
    user_phone_number,
@@ -46,5 +58,6 @@ const addUser = (
 
 module.exports = {
    getUsers,
+   foundTrip,
    addUser
 }
