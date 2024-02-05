@@ -94,3 +94,16 @@ CREATE TABLE users (
    user_location text,
    user_create_at timestamptz DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE news (
+   news_id bigserial PRiMARY KEY,
+   news_title text,
+   news_description text,
+   news_button_text text,
+   news_link text,
+   trip_id int,
+   news_image_link text,
+   news_image_name text,
+   news_active boolean DEFAULT true,
+   news_create_at timestamptz DEFAULT CURRENT_TIMESTAMP
+);
