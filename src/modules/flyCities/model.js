@@ -12,7 +12,7 @@ const getCitiesByCountry = (country_id) => {
       ON
          a.country_id = b.country_id
       WHERE
-         country_id = $1
+         a.country_id = $1
       ORDER BY
          city_name;
    `;
