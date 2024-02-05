@@ -15,6 +15,7 @@ const flyCountries = require('./flyCountries/flyCountries')
 const flyCities = require('./flyCities/flyCities')
 const hotels = require('./hotels/hotels')
 const trips = require('./trips/trips')
+const news = require('./news/news')
 
 router
 
@@ -74,5 +75,12 @@ router
    .post('/trip/add', AUTH, FileUpload.fields([{ name: "photos" }, { name: "videos" }]), trips.ADD_TRIP)
    .put('/trip/edit', AUTH, FileUpload.fields([{ name: "photos" }, { name: "videos" }]), trips.UPDATE_TRIP)
    .delete('/trip/delete', AUTH, trips.DELETE_TRIP)
+
+   // NEWS API
+   .get('/news/list', news.GET)
+   .get('/news/:id', news.GET_ID)
+   .post('/news/add', AUTH, FileUpload.single("photo"), news.ADD_NEWS)
+   .put('/news/edit', AUTH, FileUpload.single("photo"), news.UPDATE_NEWS)
+   .delete('/news/delete', AUTH, news.DELETE_NEWS)
 
 module.exports = router
