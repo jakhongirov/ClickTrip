@@ -3,7 +3,8 @@ const { fetch, fetchALL } = require('../../lib/postgres')
 const getCitiesByCountry = (country_id) => {
    const QUERY = `
       SELECT
-         *
+         city_id,
+         city_name
       FROM
          fly_cities a
       INNER JOIN
