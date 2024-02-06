@@ -29,7 +29,8 @@ const getHotelsListAdmin = () => {
 const getHotelList = (
    meal,
    star,
-   destination_id
+   destination_id,
+   lang
 ) => {
    const QUERY = `
       SELECT
@@ -41,6 +42,7 @@ const getHotelList = (
          ${meal ? `and hotel_meal = '${meal}'` : ""}
          ${star ? `and hotel_star >= ${star}` : ""}
          ${destination_id ? `and destination_id = ${destination_id}` : ""}
+         ${lang ? `and hotel_lang = '${lang}'` : ""}
       ORDER BY
          hotel_star
    `;
@@ -54,6 +56,7 @@ const addHotel = (
    hotel_meal,
    hotel_star,
    destination_id,
+   lang,
    imageUrl,
    imageName
 ) => {
@@ -66,6 +69,7 @@ const addHotel = (
             hotel_meal,
             hotel_star,
             destination_id,
+            hotel_lang,
             hotel_image_url,
             hotel_image_name
          ) VALUES (
@@ -76,7 +80,8 @@ const addHotel = (
             $5,
             $6,
             $7,
-            $8
+            $8,
+            $9
          ) RETURNING *;
    `;
 
@@ -88,6 +93,7 @@ const addHotel = (
       hotel_meal,
       hotel_star,
       destination_id,
+      lang,
       imageUrl,
       imageName
    )
@@ -112,6 +118,7 @@ const updateHotel = (
    hotel_meal,
    hotel_star,
    destination_id,
+   lang,
    imageUrl,
    imageName
 ) => {
@@ -125,8 +132,9 @@ const updateHotel = (
          hotel_meal = $5,
          hotel_star = $6,
          destination_id = $7,
-         hotel_image_url = $8,
-         hotel_image_name = $9
+         hotel_lang = $8
+         hotel_image_url = $9,
+         hotel_image_name = $10
       WHERE
          hotel_id = $1
       RETURNING *;
@@ -141,6 +149,7 @@ const updateHotel = (
       hotel_meal,
       hotel_star,
       destination_id,
+      lang,
       imageUrl,
       imageName
    )

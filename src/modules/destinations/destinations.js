@@ -6,19 +6,38 @@ const FS = require('../../lib/fs/fs')
 module.exports = {
    GET: async (_, res) => {
       try {
-         const getDestinations = await model.getDestinations()
+         const { lang } = req.query
 
-         if (getDestinations?.length > 0) {
-            return res.status(200).json({
-               status: 200,
-               message: "Success",
-               data: getDestinations
-            })
+         if (lang) {
+            const getDestinationsByLang = await model.getDestinationsByLang(lang)
+
+            if (getDestinationsByLang?.length > 0) {
+               return res.status(200).json({
+                  status: 200,
+                  message: "Success",
+                  data: getDestinationsByLang
+               })
+            } else {
+               return res.status(404).json({
+                  status: 404,
+                  message: "Not found"
+               })
+            }
          } else {
-            return res.status(404).json({
-               status: 404,
-               message: "Not found"
-            })
+            const getDestinations = await model.getDestinations()
+
+            if (getDestinations?.length > 0) {
+               return res.status(200).json({
+                  status: 200,
+                  message: "Success",
+                  data: getDestinations
+               })
+            } else {
+               return res.status(404).json({
+                  status: 404,
+                  message: "Not found"
+               })
+            }
          }
 
       } catch (error) {
@@ -36,7 +55,8 @@ module.exports = {
          const {
             destination_name,
             destination_viza_text,
-            destination_viza
+            destination_viza,
+            lang
          } = req.body
          const imageUrl = `${process.env.BACKEND_URL}/${uploadPhoto?.filename}`
          const imageName = `${uploadPhoto?.filename}`
@@ -45,6 +65,7 @@ module.exports = {
             destination_name,
             destination_viza_text,
             destination_viza,
+            lang,
             imageUrl,
             imageName
          )
@@ -79,7 +100,8 @@ module.exports = {
             id,
             destination_name,
             destination_viza_text,
-            destination_viza
+            destination_viza,
+            lang
          } = req.body
          const foundDestination = await model.foundDestination(id)
          let imageUrl = ""
@@ -104,6 +126,7 @@ module.exports = {
                destination_name,
                destination_viza_text,
                destination_viza,
+               lang,
                imageUrl,
                imageName
             )

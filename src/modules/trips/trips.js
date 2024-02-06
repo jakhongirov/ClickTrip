@@ -53,7 +53,8 @@ module.exports = {
             end_date,
             trip_day,
             hotels,
-            trip_hot
+            trip_hot,
+            lang
          } = req.body
 
          const getTripsList = await model.getTripsList(
@@ -67,7 +68,8 @@ module.exports = {
             end_date,
             trip_day,
             hotels,
-            trip_hot
+            trip_hot,
+            lang
          )
 
          if (getTripsList?.length > 0) {
@@ -145,7 +147,8 @@ module.exports = {
             country_id,
             city_id,
             trip_day,
-            agency_id
+            agency_id,
+            lang
          } = req.body
          const imagesUrl = []
          const imagesName = []
@@ -199,6 +202,7 @@ module.exports = {
             city_id,
             trip_day,
             agency_id,
+            lang,
             imagesUrl,
             imagesName,
             videosUrl,
@@ -245,7 +249,8 @@ module.exports = {
             country_id,
             city_id,
             trip_day,
-            agency_id
+            agency_id,
+            lang
          } = req.body
          const foundTrip = await model.foundTrip(trip_id)
          const imagesUrl = []
@@ -345,6 +350,7 @@ module.exports = {
                city_id,
                trip_day,
                agency_id,
+               lang,
                imagesUrl,
                imagesName,
                videosUrl,

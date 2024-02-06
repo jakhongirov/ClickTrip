@@ -16,8 +16,27 @@ const getCountries = () => {
 
    return fetchALL(QUERY)
 }
+const getCountriesByLang = (lang) => {
+   const QUERY = `
+      SELECT
+         *
+      FROM
+         fly_countries a
+      INNER JOIN
+         fly_cities b
+      ON
+         a.country_id = b.country_id
+      WHERE
+         counrty_lang = $1
+      ORDER BY
+         country_name
+   `;
+
+   return fetchALL(QUERY, lang)
+}
 const addCountry = (
    country_name,
+   lang,
    imageUrl,
    imageName
 ) => {
@@ -25,18 +44,21 @@ const addCountry = (
       INSERT INTO
          fly_countries (
             country_name,
+            counrty_lang,
             counrty_image_url,
             counrty_image_name
          ) VALUES (
             $1,
             $2,
-            $3
+            $3,
+            $4
          ) RETURNING *;
    `;
 
    return fetch(
       QUERY,
       country_name,
+      lang,
       imageUrl,
       imageName
    )
@@ -56,6 +78,7 @@ const foundCountry = (id) => {
 const updateCountry = (
    id,
    country_name,
+   lang,
    imageUrl,
    imageName
 ) => {
@@ -64,8 +87,9 @@ const updateCountry = (
          fly_countries
       SET
          country_name = $2,
-         counrty_image_url = $3,
-         counrty_image_name = $4
+         counrty_lang = $3
+         counrty_image_url = $4,
+         counrty_image_name = $5
       WHERE
          country_id = $1
       RETURNING *;
@@ -75,6 +99,7 @@ const updateCountry = (
       QUERY,
       id,
       country_name,
+      lang,
       imageUrl,
       imageName
    )
@@ -93,6 +118,7 @@ const deleteCountry = (id) => {
 
 module.exports = {
    getCountries,
+   getCountriesByLang,
    addCountry,
    foundCountry,
    updateCountry,

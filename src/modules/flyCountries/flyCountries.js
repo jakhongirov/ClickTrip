@@ -6,20 +6,40 @@ const FS = require('../../lib/fs/fs')
 module.exports = {
    GET: async (_, res) => {
       try {
-         const getCountries = await model.getCountries()
+         const { lang } = req.query
 
-         if (getCountries?.length > 0) {
-            return res.status(200).json({
-               status: 200,
-               message: "Success",
-               data: getCountries
-            })
+         if (lang) {
+            const getCountriesByLang = await model.getCountriesByLang(lang)
 
+            if (getCountriesByLang?.length > 0) {
+               return res.status(200).json({
+                  status: 200,
+                  message: "Success",
+                  data: getCountriesByLang
+               })
+
+            } else {
+               return res.status(404).json({
+                  status: 404,
+                  message: "Not found"
+               })
+            }
          } else {
-            return res.status(404).json({
-               status: 404,
-               message: "Not found"
-            })
+            const getCountries = await model.getCountries()
+
+            if (getCountries?.length > 0) {
+               return res.status(200).json({
+                  status: 200,
+                  message: "Success",
+                  data: getCountries
+               })
+
+            } else {
+               return res.status(404).json({
+                  status: 404,
+                  message: "Not found"
+               })
+            }
          }
 
       } catch (error) {
@@ -34,12 +54,13 @@ module.exports = {
    ADD_COUNTRY: async (req, res) => {
       try {
          const uploadPhoto = req.file
-         const { country_name } = req.body
+         const { country_name, lang } = req.body
          const imageUrl = `${process.env.BACKEND_URL}/${uploadPhoto?.filename}`
          const imageName = `${uploadPhoto?.filename}`
 
          const addCountry = await model.addCountry(
             country_name,
+            lang,
             imageUrl,
             imageName
          )
@@ -69,7 +90,7 @@ module.exports = {
    UPDATE_COUNTRY: async (req, res) => {
       try {
          const uploadPhoto = req.file
-         const { id, country_name } = req.body
+         const { id, country_name, lang } = req.body
          const foundCountry = await model.foundCountry(id)
          let imageUrl = ''
          let imageName = ''
@@ -91,6 +112,7 @@ module.exports = {
             const updateCountry = await model.updateCountry(
                id,
                country_name,
+               lang,
                imageUrl,
                imageName
             )

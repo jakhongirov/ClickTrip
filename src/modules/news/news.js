@@ -3,16 +3,16 @@ const model = require('./model')
 module.exports = {
    GET: async (req, res) => {
       try {
-         const { limit, page } = req.query
+         const { lang } = req.query
 
-         if (limit && page) {
-            const getNewsLimit = await model.getNewsLimit(limit, page)
+         if (lang) {
+            const getNewsLang = await model.getNewsLang(lang)
 
-            if (getNewsLimit?.length > 0) {
+            if (getNewsLang?.length > 0) {
                return res.status(200).json({
                   status: 200,
                   message: "Success",
-                  data: getNewsLimit
+                  data: getNewsLang
                })
             } else {
                return res.status(404).json({
@@ -92,7 +92,8 @@ module.exports = {
             news_description,
             news_button_text,
             news_link,
-            trip_id
+            trip_id,
+            lang
          } = req.body
          const imageUrl = `${process.env.BACKEND_URL}/${uploadPhoto?.filename}`;
          const imageName = uploadPhoto?.filename;
@@ -103,6 +104,7 @@ module.exports = {
             news_button_text,
             news_link,
             trip_id,
+            lang,
             imageUrl,
             imageName
          )
@@ -138,7 +140,8 @@ module.exports = {
             news_description,
             news_button_text,
             news_link,
-            trip_id
+            trip_id,
+            lang
          } = req.body
          const foundNews = await model.foundNews(news_id)
 
@@ -162,6 +165,7 @@ module.exports = {
                news_button_text,
                news_link,
                trip_id,
+               lang,
                imageUrl,
                imageName
             )

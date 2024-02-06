@@ -3,19 +3,38 @@ const model = require('./model')
 module.exports = {
    GET: async (_, res) => {
       try {
-         const getCategories = await model.getCategories()
+         const { lang } = req.query
 
-         if (getCategories?.length > 0) {
-            return res.status(200).json({
-               status: 200,
-               message: "Success",
-               data: getCategories
-            })
+         if (lang) {
+            const getCategoriesByLang = await model.getCategoriesByLang(lang)
+
+            if (getCategoriesByLang?.length > 0) {
+               return res.status(200).json({
+                  status: 200,
+                  message: "Success",
+                  data: getCategoriesByLang
+               })
+            } else {
+               return res.status(404).json({
+                  status: 404,
+                  message: "Not found"
+               })
+            }
          } else {
-            return res.status(404).json({
-               status: 404,
-               message: "Not found"
-            })
+            const getCategories = await model.getCategories()
+
+            if (getCategories?.length > 0) {
+               return res.status(200).json({
+                  status: 200,
+                  message: "Success",
+                  data: getCategories
+               })
+            } else {
+               return res.status(404).json({
+                  status: 404,
+                  message: "Not found"
+               })
+            }
          }
 
       } catch (error) {
@@ -30,12 +49,13 @@ module.exports = {
    ADD_CATEGORY: async (req, res) => {
       try {
          const uploadPhoto = req.file
-         const { category_name } = req.body
+         const { category_name, lang } = req.body
          const imageUrl = `${process.env.BACKEND_URL}/${uploadPhoto?.filename}`
          const imageName = `${uploadPhoto?.filename}`
 
          const addCategory = await model.addCategory(
             category_name,
+            lang,
             imageUrl,
             imageName
          )
@@ -66,7 +86,7 @@ module.exports = {
    UPDATE_CATEGORY: async (req, res) => {
       try {
          const uploadPhoto = req.file
-         const { id, category_name } = req.body
+         const { id, category_name, lang } = req.body
          const foundCategory = await model.foundCategory(id)
          let imageUrl = ''
          let imageName = ''
@@ -88,6 +108,7 @@ module.exports = {
             const updateCategory = await model.updateCategory(
                id,
                category_name,
+               lang,
                imageUrl,
                imageName
             )

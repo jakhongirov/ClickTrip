@@ -25,7 +25,8 @@ const getTripsList = (
    end_date,
    trip_day,
    hotels,
-   trip_hot
+   trip_hot,
+   lang
 ) => {
    const categoryString = category_id?.length > 0 ? category_id?.map(t => t).join(', ') : ""
    const hotelsString = hotels?.length > 0 ? hotels?.map(t => t).join(', ') : ""
@@ -52,6 +53,7 @@ const getTripsList = (
          ${trip_day ? `and trip_day = ${trip_day}` : ""}
          ${hotelsString ? `and trip_hotels && ARRAY[${hotelsString}]::bigint[]` : ""}
          ${trip_hot ? `and trip_hot = ${trip_hot}` : ""}
+         ${lang ? `and trip_lang = '${lang}'` : ""}
       ORDER BY
          trip_id DESC
    `;
@@ -109,6 +111,7 @@ const addTrip = (
    city_id,
    trip_day,
    agency_id,
+   lang,
    imagesUrl,
    imagesName,
    videosUrl,
@@ -131,6 +134,7 @@ const addTrip = (
             city_id,
             trip_day,
             agency_id,
+            trip_lang,
             trip_images_url,
             trip_images_name,
             trip_videos_url,
@@ -153,7 +157,8 @@ const addTrip = (
             $15,
             $16,
             $17,
-            $18
+            $18,
+            $19
          ) RETURNING *;
    `;
 
@@ -173,6 +178,7 @@ const addTrip = (
       city_id,
       trip_day,
       agency_id,
+      lang,
       imagesUrl,
       imagesName,
       videosUrl,
@@ -195,6 +201,7 @@ const updateTrip = (
    city_id,
    trip_day,
    agency_id,
+   lang,
    imagesUrl,
    imagesName,
    videosUrl,
@@ -218,10 +225,11 @@ const updateTrip = (
          city_id = $13,
          trip_day = $14,
          agency_id = $15,
-         trip_images_url = $16,
-         trip_images_name = $17,
-         trip_videos_url = $18,
-         trip_videos_name = $19
+         trip_lang = $16, 
+         trip_images_url = $17,
+         trip_images_name = $18,
+         trip_videos_url = $19,
+         trip_videos_name = $20
       WHERE
          trip_id = $1
       RETURNING *;
@@ -244,6 +252,7 @@ const updateTrip = (
       city_id,
       trip_day,
       agency_id,
+      lang,
       imagesUrl,
       imagesName,
       videosUrl,

@@ -55,12 +55,13 @@ module.exports = {
 
    GET: async (req, res) => {
       try {
-         const { meal, star, destination_id } = req.body
+         const { meal, star, destination_id, lang } = req.body
 
          const getHotelList = await model.getHotelList(
             meal,
             star,
-            destination_id
+            destination_id,
+            lang
          )
 
          if (getHotelList?.length > 0) {
@@ -94,7 +95,8 @@ module.exports = {
             hotel_description,
             hotel_meal,
             hotel_star,
-            destination_id
+            destination_id,
+            lang
          } = req.body
          const imageUrl = `${process.env.BACKEND_URL}/${uploadPhoto?.filename}`
          const imageName = `${uploadPhoto?.filename}`
@@ -106,6 +108,7 @@ module.exports = {
             hotel_meal,
             hotel_star,
             destination_id,
+            lang,
             imageUrl,
             imageName
          )
@@ -142,7 +145,8 @@ module.exports = {
             hotel_description,
             hotel_meal,
             hotel_star,
-            destination_id
+            destination_id,
+            lang
          } = req.body
          const foundHotel = await model.foundHotel(id)
          let imageUrl = ``
@@ -169,6 +173,7 @@ module.exports = {
                hotel_meal,
                hotel_star,
                destination_id,
+               lang,
                imageUrl,
                imageName
             )

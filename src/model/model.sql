@@ -22,6 +22,7 @@ CREATE TABLE destinations (
    destination_viza boolean DEFAULT false,
    destination_image_url text,
    destination_image_name text,
+   destination_lang text,
    destination_create_at timestamptz DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -30,6 +31,7 @@ CREATE TABLE categories (
    category_name text not null,
    category_image_url text,
    category_image_name text,
+   category_lang text,
    category_create_at timestamptz DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -38,6 +40,7 @@ CREATE TABLE fly_countries (
    country_name text not null,
    counrty_image_url text,
    counrty_image_name text,
+   counrty_lang text,
    country_create_at timestamptz DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -57,6 +60,7 @@ CREATE TABLE hotels (
    hotel_star int,
    hotel_image_url text,
    hotel_image_name text,
+   hotel_lang text,
    destination_id int REFERENCES destinations(destination_id) ON DELETE CASCADE,
    hotel_active boolean DEFAULT true,
    hotel_create_at timestamptz DEFAULT CURRENT_TIMESTAMP
@@ -72,6 +76,7 @@ CREATE TABLE trips (
    trip_videos_url text [],
    trip_videos_name text [],
    trip_description text,
+   trip_lang text,
    trip_price int,
    trip_sale_price int DEFAULT 0,
    trip_hot boolean DEFAULT false,
@@ -101,6 +106,7 @@ CREATE TABLE news (
    news_description text,
    news_button_text text,
    news_link text,
+   news_lang text,
    trip_id int,
    news_image_link text,
    news_image_name text,
