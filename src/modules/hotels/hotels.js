@@ -55,12 +55,12 @@ module.exports = {
 
    GET: async (req, res) => {
       try {
-         const { meal, star, destination_id, lang } = req.body
+         const { star, country, city, lang } = req.body
 
          const getHotelList = await model.getHotelList(
-            meal,
             star,
-            destination_id,
+            country,
+            city,
             lang
          )
 
@@ -91,11 +91,11 @@ module.exports = {
          const uploadPhoto = req.file
          const {
             hotel_name,
-            hotel_price,
             hotel_description,
-            hotel_meal,
             hotel_star,
-            destination_id,
+            hotel_location,
+            hotel_country,
+            hotel_city,
             lang
          } = req.body
          const imageUrl = `${process.env.BACKEND_URL}/${uploadPhoto?.filename}`
@@ -103,11 +103,11 @@ module.exports = {
 
          const addHotel = await model.addHotel(
             hotel_name,
-            hotel_price,
             hotel_description,
-            hotel_meal,
             hotel_star,
-            destination_id,
+            hotel_location,
+            hotel_country,
+            hotel_city,
             lang,
             imageUrl,
             imageName
@@ -141,11 +141,11 @@ module.exports = {
          const {
             id,
             hotel_name,
-            hotel_price,
             hotel_description,
-            hotel_meal,
             hotel_star,
-            destination_id,
+            hotel_location,
+            hotel_country,
+            hotel_city,
             lang
          } = req.body
          const foundHotel = await model.foundHotel(id)
@@ -168,11 +168,11 @@ module.exports = {
             const updateHotel = await model.updateHotel(
                id,
                hotel_name,
-               hotel_price,
                hotel_description,
-               hotel_meal,
                hotel_star,
-               destination_id,
+               hotel_location,
+               hotel_country,
+               hotel_city,
                lang,
                imageUrl,
                imageName

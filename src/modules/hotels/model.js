@@ -27,9 +27,9 @@ const getHotelsListAdmin = () => {
    return fetchALL(QUERY)
 }
 const getHotelList = (
-   meal,
    star,
-   destination_id,
+   country,
+   city,
    lang
 ) => {
    const QUERY = `
@@ -39,10 +39,10 @@ const getHotelList = (
          hotels
       WHERE
          hotel_active = true
-         ${meal ? `and hotel_meal = '${meal}'` : ""}
          ${star ? `and hotel_star >= ${star}` : ""}
-         ${destination_id ? `and destination_id = ${destination_id}` : ""}
          ${lang ? `and hotel_lang = '${lang}'` : ""}
+         ${country ? `and hotel_country = ${country}` : ""}
+         ${city ? `and hotel_country = ${city}` : ""}
       ORDER BY
          hotel_star
    `;
@@ -51,11 +51,11 @@ const getHotelList = (
 }
 const addHotel = (
    hotel_name,
-   hotel_price,
    hotel_description,
-   hotel_meal,
    hotel_star,
-   destination_id,
+   hotel_location,
+   hotel_country,
+   hotel_city,
    lang,
    imageUrl,
    imageName
@@ -64,11 +64,11 @@ const addHotel = (
       INSERT INTO
          hotels (
             hotel_name,
-            hotel_price,
             hotel_description,
-            hotel_meal,
             hotel_star,
-            destination_id,
+            hotel_location,
+            hotel_country,
+            hotel_city,
             hotel_lang,
             hotel_image_url,
             hotel_image_name
@@ -88,11 +88,11 @@ const addHotel = (
    return fetch(
       QUERY,
       hotel_name,
-      hotel_price,
       hotel_description,
-      hotel_meal,
       hotel_star,
-      destination_id,
+      hotel_location,
+      hotel_country,
+      hotel_city,
       lang,
       imageUrl,
       imageName
@@ -113,11 +113,11 @@ const foundHotel = (id) => {
 const updateHotel = (
    id,
    hotel_name,
-   hotel_price,
    hotel_description,
-   hotel_meal,
    hotel_star,
-   destination_id,
+   hotel_location,
+   hotel_country,
+   hotel_city,
    lang,
    imageUrl,
    imageName
@@ -127,11 +127,11 @@ const updateHotel = (
          hotels
       SET
          hotel_name = $2,
-         hotel_price = $3,
-         hotel_description = $4,
-         hotel_meal = $5,
-         hotel_star = $6,
-         destination_id = $7,
+         hotel_description = $3,
+         hotel_star = $4,
+         hotel_location = $5,
+         hotel_country = $6,
+         hotel_city = $7,
          hotel_lang = $8
          hotel_image_url = $9,
          hotel_image_name = $10
@@ -144,11 +144,11 @@ const updateHotel = (
       QUERY,
       id,
       hotel_name,
-      hotel_price,
       hotel_description,
-      hotel_meal,
       hotel_star,
-      destination_id,
+      hotel_location,
+      hotel_country,
+      hotel_city,
       lang,
       imageUrl,
       imageName

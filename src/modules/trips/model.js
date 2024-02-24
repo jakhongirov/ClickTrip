@@ -71,14 +71,6 @@ const foundTrip = (id) => {
       ON
          a.destination_id = b.destination_id
       INNER JOIN
-         categories c
-      ON
-         c.category_id = ANY(a.category_id)
-      INNER JOIN
-         hotels d
-      ON
-         d.hotel_id = ANY(a.trip_hotels)
-      INNER JOIN
          fly_countries e
       ON
          a.country_id = e.country_id
@@ -96,22 +88,49 @@ const foundTrip = (id) => {
 
    return fetch(QUERY, id)
 }
+const foundHotels = (trip_hotels) => {
+   const QUERY = `
+      SELECT
+         *
+      FROM
+         hotels
+      WHERE
+         hotel_id::int = ANY($1);
+   `;
+
+   return fetchALL(QUERY, trip_hotels)
+}
+const foundCategories = (category_id) => {
+   const QUERY = `
+      SELECT
+         *
+      FROM
+         categories
+      WHERE
+         category_id::int = ANY($1);
+   `;
+
+   return fetchALL(QUERY, category_id)
+}
 const addTrip = (
-   destination_id,
-   category_id,
    trip_name,
    trip_description,
    trip_price,
    trip_sale_price,
+   trip_hot_price,
    trip_hot,
+   start_date,
+   end_date,
+   trip_day,
+   lang,
+   destination_id,
+   category_id,
    trip_hotels,
-   trip_start_date,
-   trip_end_date,
    country_id,
    city_id,
-   trip_day,
+   airway_id,
+   baggage,
    agency_id,
-   lang,
    imagesUrl,
    imagesName,
    videosUrl,
@@ -120,21 +139,24 @@ const addTrip = (
    const QUERY = `
       INSERT INTO 
          trips (
-            destination_id,
-            category_id,
             trip_name,
             trip_description,
             trip_price,
             trip_sale_price,
+            trip_hot_price,
             trip_hot,
-            trip_hotels,
             trip_start_date,
             trip_end_date,
+            trip_day,
+            trip_lang,
+            destination_id,
+            category_id,
+            trip_hotels,
             country_id,
             city_id,
-            trip_day,
+            airway_id,
+            baggage,
             agency_id,
-            trip_lang,
             trip_images_url,
             trip_images_name,
             trip_videos_url,
@@ -158,27 +180,33 @@ const addTrip = (
             $16,
             $17,
             $18,
-            $19
+            $19,
+            $20,
+            $21,
+            $22
          ) RETURNING *;
    `;
 
    return fetch(
       QUERY,
-      destination_id,
-      category_id,
       trip_name,
       trip_description,
       trip_price,
       trip_sale_price,
+      trip_hot_price,
       trip_hot,
+      start_date,
+      end_date,
+      trip_day,
+      lang,
+      destination_id,
+      category_id,
       trip_hotels,
-      trip_start_date,
-      trip_end_date,
       country_id,
       city_id,
-      trip_day,
+      airway_id,
+      baggage,
       agency_id,
-      lang,
       imagesUrl,
       imagesName,
       videosUrl,
@@ -187,21 +215,24 @@ const addTrip = (
 }
 const updateTrip = (
    trip_id,
-   destination_id,
-   category_id,
    trip_name,
    trip_description,
    trip_price,
    trip_sale_price,
+   trip_hot_price,
    trip_hot,
+   start_date,
+   end_date,
+   trip_day,
+   lang,
+   destination_id,
+   category_id,
    trip_hotels,
-   trip_start_date,
-   trip_end_date,
    country_id,
    city_id,
-   trip_day,
+   airway_id,
+   baggage,
    agency_id,
-   lang,
    imagesUrl,
    imagesName,
    videosUrl,
@@ -211,25 +242,28 @@ const updateTrip = (
       UPDATE
          trips
       SET
-         destination_id = $2,
-         category_id = $3,
-         trip_name = $4,
-         trip_description = $5,
-         trip_price = $6,
-         trip_sale_price = $7,
-         trip_hot = $8,
-         trip_hotels = $9,
-         trip_start_date = $10,
-         trip_end_date = $11,
-         country_id = $12,
-         city_id = $13,
-         trip_day = $14,
-         agency_id = $15,
-         trip_lang = $16, 
-         trip_images_url = $17,
-         trip_images_name = $18,
-         trip_videos_url = $19,
-         trip_videos_name = $20
+         trip_name = $2,
+         trip_description = $3,
+         trip_price = $4,
+         trip_sale_price = $5,
+         trip_hot_price = $6,
+         trip_hot = $7,
+         trip_start_date = $8,
+         trip_end_date = $9,
+         trip_day = $10,
+         trip_lang = $11,
+         destination_id = $12,
+         category_id = $13,
+         trip_hotels = $14,
+         country_id = $15,
+         city_id = $16,
+         airway_id = $17,
+         baggage = $18,
+         agency_id = $19,
+         trip_images_url = $20,
+         trip_images_name = $21,
+         trip_videos_url = $22,
+         trip_videos_name = $23
       WHERE
          trip_id = $1
       RETURNING *;
@@ -238,21 +272,24 @@ const updateTrip = (
    return fetch(
       QUERY,
       trip_id,
-      destination_id,
-      category_id,
       trip_name,
       trip_description,
       trip_price,
       trip_sale_price,
+      trip_hot_price,
       trip_hot,
+      start_date,
+      end_date,
+      trip_day,
+      lang,
+      destination_id,
+      category_id,
       trip_hotels,
-      trip_start_date,
-      trip_end_date,
       country_id,
       city_id,
-      trip_day,
+      airway_id,
+      baggage,
       agency_id,
-      lang,
       imagesUrl,
       imagesName,
       videosUrl,
@@ -275,6 +312,8 @@ module.exports = {
    getTripsListAdmin,
    getTripsList,
    foundTrip,
+   foundHotels,
+   foundCategories,
    addTrip,
    updateTrip,
    deleteTrip

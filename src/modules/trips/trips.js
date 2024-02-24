@@ -100,12 +100,17 @@ module.exports = {
 
          if (id) {
             const foundTrip = await model.foundTrip(id)
+            const foundCategories = await model.foundCategories(foundTrip?.category_id)
+            const hotels = foundTrip.trip_hotels.map(hotel => hotel.id);
+            const foundHotels = await model.foundHotels(hotels)
 
             if (foundTrip) {
                return res.status(200).json({
                   status: 200,
                   message: "Success",
-                  data: foundTrip
+                  data: foundTrip,
+                  categories: foundCategories,
+                  hotels: foundHotels
                })
             } else {
                return res.status(404).json({
@@ -134,21 +139,24 @@ module.exports = {
       try {
          const uploadFile = req.files
          const {
-            destination_id,
-            category_id,
             trip_name,
             trip_description,
             trip_price,
             trip_sale_price,
+            trip_hot_price,
             trip_hot,
-            trip_hotels,
             trip_start_date,
             trip_end_date,
+            trip_day,
+            lang,
+            destination_id,
+            category_id,
+            trip_hotels,
             country_id,
             city_id,
-            trip_day,
-            agency_id,
-            lang
+            airway_id,
+            baggage,
+            agency_id
          } = req.body
          const imagesUrl = []
          const imagesName = []
@@ -188,21 +196,24 @@ module.exports = {
          }
 
          const addTrip = await model.addTrip(
-            destination_id,
-            JSON.parse(category_id),
             trip_name,
             trip_description,
             trip_price,
             trip_sale_price,
+            trip_hot_price,
             trip_hot,
-            JSON.parse(trip_hotels),
             start_date,
             end_date,
+            trip_day,
+            lang,
+            destination_id,
+            JSON.parse(category_id),
+            JSON.parse(trip_hotels),
             country_id,
             city_id,
-            trip_day,
+            airway_id,
+            baggage,
             agency_id,
-            lang,
             imagesUrl,
             imagesName,
             videosUrl,
@@ -236,21 +247,24 @@ module.exports = {
          const uploadFile = req.files
          const {
             trip_id,
-            destination_id,
-            category_id,
             trip_name,
             trip_description,
             trip_price,
             trip_sale_price,
+            trip_hot_price,
             trip_hot,
-            trip_hotels,
             trip_start_date,
             trip_end_date,
+            trip_day,
+            lang,
+            destination_id,
+            category_id,
+            trip_hotels,
             country_id,
             city_id,
-            trip_day,
-            agency_id,
-            lang
+            airway_id,
+            baggage,
+            agency_id
          } = req.body
          const foundTrip = await model.foundTrip(trip_id)
          const imagesUrl = []
@@ -336,21 +350,24 @@ module.exports = {
 
             const updateTrip = await model.updateTrip(
                trip_id,
-               destination_id,
-               JSON.parse(category_id),
                trip_name,
                trip_description,
                trip_price,
                trip_sale_price,
+               trip_hot_price,
                trip_hot,
-               JSON.parse(trip_hotels),
                start_date,
                end_date,
+               trip_day,
+               lang,
+               destination_id,
+               JSON.parse(category_id),
+               JSON.parse(trip_hotels),
                country_id,
                city_id,
-               trip_day,
+               airway_id,
+               baggage,
                agency_id,
-               lang,
                imagesUrl,
                imagesName,
                videosUrl,

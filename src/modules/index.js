@@ -10,9 +10,11 @@ const admin = require('./admin/admin')
 const users = require('./users/users')
 const agencies = require('./agencies/agencies')
 const categories = require('./categories/categories')
-const destinations = require('./destinations/destinations')
+const tourCountry = require('./tourCountry/tourCountry')
+const tourDestinations = require('./tourDestinations/tourDestinations')
 const flyCountries = require('./flyCountries/flyCountries')
 const flyCities = require('./flyCities/flyCities')
+const airway = require('./airway/airway')
 const hotels = require('./hotels/hotels')
 const trips = require('./trips/trips')
 const news = require('./news/news')
@@ -43,25 +45,37 @@ router
    .put('/category/edit', AUTH, FileUpload.single("photo"), categories.UPDATE_CATEGORY)
    .delete('/category/delete', AUTH, categories.DELETE_CATEGORY)
 
-   // DESTINATIONS API
-   .get('/destinations', destinations.GET)
-   .post('/destination/add', AUTH, FileUpload.single("photo"), destinations.ADD_DESTINATION)
-   .put('/destination/edit', AUTH, FileUpload.single("photo"), destinations.UPDATE_DESTINATION)
-   .delete('/destination/delete', AUTH, destinations.DELETE_DESTINATION)
+   // TOUR COUNTRY API
+   .get('/tour/countries', tourCountry.GET)
+   .post('/tour/country/add', AUTH, FileUpload.single("photo"), tourCountry.ADD_TOUR_COUNTRY)
+   .put('/tour/country/edit', AUTH, FileUpload.single("photo"), tourCountry.UPDATE_TOUR_COUNTRY)
+   .delete('/tour/country/delete', AUTH, tourCountry.DELETE_TOUR_COUNTRY)
 
-   // FLY COUNTRIES
+   // TOUR DESTINATION API
+   .get('/tour/destinations', tourDestinations.GET)
+   .post('/tour/destination/add', tourDestinations.ADD_TOUR_CITY)
+   .put('/tour/destination/edit', tourDestinations.UPDATE_TOUR_CITY)
+   .delete('/tour/destination/delete', tourDestinations.DELETE_TOUR_CITY)
+
+   // FLY COUNTRIES API
    .get('/fly/countries', flyCountries.GET)
    .post('/fly/country/add', AUTH, FileUpload.single("photo"), flyCountries.ADD_COUNTRY)
    .put('/fly/country/edit', AUTH, FileUpload.single("photo"), flyCountries.UPDATE_COUNTRY)
    .delete('/fly/country/delete', AUTH, flyCountries.DELETE_COUNTRY)
 
-   // FLY CITIES
+   // FLY CITIES API
    .get('/fly/cities', flyCities.GET)
    .post('/fly/city/add', AUTH, flyCities.ADD_CITY)
    .put('/fly/city/edit', AUTH, flyCities.UPDATE_CITY)
    .delete('/fly/city/delete', AUTH, flyCities.DEETE_CITY)
 
-   // HOTELS
+   // AIRWAY API
+   .get('/airways', airway.GET)
+   .post('/airway/add', airway.ADD_AIRWAY)
+   .put('/airway/edit', airway.UPDATE_AIRWAY)
+   .delete('/airway/delete', airway.DELETE_AIRWAY)
+
+   // HOTELS API
    .get('/hotels/list/admin', AUTH, hotels.GET_ADMIN)
    .post('/hotels/list', hotels.GET)
    .post('/hotel/add', AUTH, FileUpload.single("photo"), hotels.ADD_HOTEL)

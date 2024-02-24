@@ -9,13 +9,13 @@ module.exports = {
          const { lang } = req.query
 
          if (lang) {
-            const getDestinationsByLang = await model.getDestinationsByLang(lang)
+            const getTourCountriesLang = await model.getTourCountriesLang(lang)
 
-            if (getDestinationsByLang?.length > 0) {
+            if (getTourCountriesLang?.length > 0) {
                return res.status(200).json({
                   status: 200,
                   message: "Success",
-                  data: getDestinationsByLang
+                  data: getTourCountriesLang
                })
             } else {
                return res.status(404).json({
@@ -24,13 +24,13 @@ module.exports = {
                })
             }
          } else {
-            const getDestinations = await model.getDestinations()
+            const getTourCountries = await model.getTourCountries()
 
-            if (getDestinations?.length > 0) {
+            if (getTourCountries?.length > 0) {
                return res.status(200).json({
                   status: 200,
                   message: "Success",
-                  data: getDestinations
+                  data: getTourCountries
                })
             } else {
                return res.status(404).json({
@@ -49,32 +49,32 @@ module.exports = {
       }
    },
 
-   ADD_DESTINATION: async (req, res) => {
+   ADD_TOUR_COUNTRY: async (req, res) => {
       try {
          const uploadPhoto = req.file
          const {
-            destination_name,
-            destination_viza_text,
-            destination_viza,
+            country_name,
+            country_viza_text,
+            country_viza,
             lang
          } = req.body
          const imageUrl = `${process.env.BACKEND_URL}/${uploadPhoto?.filename}`
          const imageName = `${uploadPhoto?.filename}`
 
-         const addDestination = await model.addDestination(
-            destination_name,
-            destination_viza_text,
-            destination_viza,
+         const addTourCountries = await model.addTourCountries(
+            country_name,
+            country_viza_text,
+            country_viza,
             lang,
             imageUrl,
             imageName
          )
 
-         if (addDestination) {
+         if (addTourCountries) {
             return res.status(200).json({
                status: 200,
                message: "Success",
-               data: addDestination
+               data: addTourCountries
             })
 
          } else {
@@ -93,49 +93,49 @@ module.exports = {
       }
    },
 
-   UPDATE_DESTINATION: async (req, res) => {
+   UPDATE_TOUR_COUNTRY: async (req, res) => {
       try {
          const uploadPhoto = req.file
          const {
             id,
-            destination_name,
-            destination_viza_text,
-            destination_viza,
+            country_name,
+            country_viza_text,
+            country_viza,
             lang
          } = req.body
-         const foundDestination = await model.foundDestination(id)
+         const foundTourCountries = await model.foundTourCountries(id)
          let imageUrl = ""
          let imageName = ""
 
          if (uploadPhoto) {
-            if (foundDestination?.destination_image_name) {
-               const deleteOldAvatar = new FS(path.resolve(__dirname, '..', '..', '..', 'public', 'images', `${foundDestination?.destination_image_name}`))
+            if (foundTourCountries?.country_image_name) {
+               const deleteOldAvatar = new FS(path.resolve(__dirname, '..', '..', '..', 'public', 'images', `${foundTourCountries?.country_image_name}`))
                deleteOldAvatar.delete()
             }
 
             imageUrl = `${process.env.BACKEND_URL}/${uploadPhoto?.filename}`
             imageName = `${uploadPhoto?.filename}`
          } else {
-            imageUrl = foundDestination?.destination_image_url
-            imageName = foundDestination?.destination_image_name
+            imageUrl = foundTourCountries?.country_image_url
+            imageName = foundTourCountries?.country_image_name
          }
 
-         if (foundDestination) {
-            const updateDestination = await model.updateDestination(
+         if (foundTourCountries) {
+            const updateTourCountries = await model.updateTourCountries(
                id,
-               destination_name,
-               destination_viza_text,
-               destination_viza,
+               country_name,
+               country_viza_text,
+               country_viza,
                lang,
                imageUrl,
                imageName
             )
 
-            if (updateDestination) {
+            if (updateTourCountries) {
                return res.status(200).json({
                   status: 200,
                   message: "Success",
-                  data: updateDestination
+                  data: updateTourCountries
                })
 
             } else {
@@ -161,25 +161,25 @@ module.exports = {
       }
    },
 
-   DELETE_DESTINATION: async (req, res) => {
+   DELETE_TOUR_COUNTRY: async (req, res) => {
       try {
          const { id } = req.body
-         const foundDestination = await model.foundDestination(id)
+         const foundTourCountries = await model.foundTourCountries(id)
 
-         if (foundDestination) {
+         if (foundTourCountries) {
 
-            if (foundDestination?.destination_image_name) {
-               const deleteOldAvatar = new FS(path.resolve(__dirname, '..', '..', '..', 'public', 'images', `${foundDestination?.destination_image_name}`))
+            if (foundTourCountries?.country_image_name) {
+               const deleteOldAvatar = new FS(path.resolve(__dirname, '..', '..', '..', 'public', 'images', `${foundTourCountries?.country_image_name}`))
                deleteOldAvatar.delete()
             }
 
-            const deleteDestination = await model.deleteDestination(id)
+            const deleteTourCountries = await model.deleteTourCountries(id)
 
-            if (deleteDestination) {
+            if (deleteTourCountries) {
                return res.status(200).json({
                   status: 200,
                   message: "Success",
-                  data: deleteDestination
+                  data: deleteTourCountries
                })
 
             } else {
