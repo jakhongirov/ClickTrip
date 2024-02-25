@@ -67,7 +67,7 @@ const foundTrip = (id) => {
       FROM
          trips a
       INNER JOIN
-         destinations b
+         tour_destinations b
       ON
          a.destination_id = b.destination_id
       INNER JOIN
@@ -82,6 +82,10 @@ const foundTrip = (id) => {
          agencies g
       ON
          a.agency_id = g.agency_id
+      INNER JOIN
+         airways c
+      ON
+         a.airway_id = c.airway_id
       WHERE
          trip_id = $1
    `;
