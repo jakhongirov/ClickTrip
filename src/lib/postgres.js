@@ -5,7 +5,7 @@ const credentials = {
   user: "sellcent",
   host: "localhost",
   database: "sellcent_click",
-  password: "eA9WS3s4(ym8F]",
+  password: "@Fcuiws{p26R",
   port: 5432,
 };
 
