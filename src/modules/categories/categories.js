@@ -1,7 +1,7 @@
 const model = require('./model')
 
 module.exports = {
-   GET: async (_, res) => {
+   GET: async (req, res) => {
       try {
          const { lang } = req.query
 
