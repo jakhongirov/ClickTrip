@@ -5,11 +5,7 @@ const getCountries = () => {
       SELECT
          *
       FROM
-         fly_countries a
-      INNER JOIN
-         fly_cities b
-      ON
-         a.country_id = b.country_id
+         fly_countries
       ORDER BY
          country_name
    `;
