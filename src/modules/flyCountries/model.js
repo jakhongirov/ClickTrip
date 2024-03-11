@@ -14,23 +14,22 @@ const getCountries = () => {
 }
 const getCountriesByLang = (lang) => {
    const QUERY = `
-   SELECT
-      a.country_id,
-      a.country_name,
-      a.country_lang,
-      ARRAY_AGG(b.city_name) AS cities
-   FROM
-      fly_countries a
-   INNER JOIN
-      fly_cities b
-   ON
-      a.country_id = b.country_id
-   WHERE
-      a.country_lang = $1
-   GROUP BY
-      a.country_id, a.country_name, a.country_lang
-   ORDER BY
-      a.country_name;
+      SELECT
+         a.country_id,
+         country_name,
+         counrty_image_url,
+         counrty_image_name,
+         ARRAY_AGG(city_name, city_id) AS cities
+      FROM
+         fly_countries a
+      INNER JOIN
+         fly_cities b
+      ON
+         a.country_id = b.country_id
+      WHERE
+         counrty_lang = $1
+      ORDER BY
+         country_name
    `;
 
    return fetchALL(QUERY, lang)
