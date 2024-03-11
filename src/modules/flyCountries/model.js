@@ -19,7 +19,7 @@ const getCountriesByLang = (lang) => {
          country_name,
          counrty_image_url,
          counrty_image_name,
-         ARRAY_AGG(city_name) AS cities
+         json_agg(json_build_object('id', b.city_id, 'name', b.city_name)) AS cities
       FROM
          fly_countries a
       INNER JOIN
@@ -31,7 +31,7 @@ const getCountriesByLang = (lang) => {
       GROUP BY
          a.country_id
       ORDER BY
-         country_name
+         country_name;
    `;
 
    return fetchALL(QUERY, lang)
