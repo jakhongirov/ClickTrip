@@ -19,7 +19,7 @@ const getCountriesByLang = (lang) => {
          country_name,
          counrty_image_url,
          counrty_image_name,
-         ARRAY_AGG(city_name, city_id) AS cities
+         ARRAY_AGG(city_name) AS cities
       FROM
          fly_countries a
       INNER JOIN
