@@ -28,6 +28,8 @@ const getCountriesByLang = (lang) => {
          a.country_id = b.country_id
       WHERE
          counrty_lang = $1
+      GROUP BY
+         a.country_id
       ORDER BY
          country_name
    `;
