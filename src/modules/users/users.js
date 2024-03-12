@@ -5,7 +5,7 @@ const axios = require('axios');
 module.exports = {
    GET: async (req, res) => {
       try {
-         const { limit, page } = req.body
+         const { limit, page } = req.params
 
          if (limit && page) {
             const getUsers = await model.getUsers(limit, page)
