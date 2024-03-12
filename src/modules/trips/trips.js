@@ -56,6 +56,7 @@ module.exports = {
             trip_hot,
             lang
          } = req.body
+         const { limit, page } = req.query
 
          const getTripsList = await model.getTripsList(
             destination_id,
@@ -69,7 +70,9 @@ module.exports = {
             trip_day,
             hotels,
             trip_hot,
-            lang
+            lang,
+            limit,
+            page
          )
 
          if (getTripsList?.length > 0) {

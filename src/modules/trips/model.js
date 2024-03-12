@@ -26,7 +26,9 @@ const getTripsList = (
    trip_day,
    hotels,
    trip_hot,
-   lang
+   lang,
+   limit,
+   page
 ) => {
    const categoryString = category_id?.length > 0 ? category_id?.map(t => t).join(', ') : ""
    const hotelsString = hotels?.length > 0 ? hotels?.map(t => t).join(', ') : ""
@@ -56,6 +58,8 @@ const getTripsList = (
          ${lang ? `and trip_lang = '${lang}'` : ""}
       ORDER BY
          trip_id DESC
+      LIMIT ${limit}
+      OFFSET ${Number((page - 1) * limit)}
    `;
 
    return fetchALL(QUERY)
