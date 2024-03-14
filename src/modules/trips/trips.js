@@ -3,6 +3,17 @@ const model = require('./model')
 const path = require('path')
 const FS = require('../../lib/fs/fs')
 
+const addPriceToHotels = (hotels, prices) => {
+   return hotels.map(hotel => {
+      const priceEntry = prices.find(entry => entry.id === hotel.hotel_id);
+      if (priceEntry) {
+         return { ...hotel, price: priceEntry.price };
+      } else {
+         return hotel;
+      }
+   });
+}
+
 module.exports = {
    GET_ADMIN: async (req, res) => {
       try {
@@ -106,6 +117,7 @@ module.exports = {
             const foundCategories = await model.foundCategories(foundTrip?.category_id)
             const hotels = foundTrip.trip_hotels.map(hotel => hotel.id);
             const foundHotels = await model.foundHotels(hotels)
+            const hotelsWithPrice = addPriceToHotels(foundHotels, foundTrip.trip_hotels);
 
             if (foundTrip) {
                return res.status(200).json({
@@ -113,7 +125,7 @@ module.exports = {
                   message: "Success",
                   data: foundTrip,
                   categories: foundCategories,
-                  hotels: foundHotels
+                  hotels: hotelsWithPrice
                })
             } else {
                return res.status(404).json({
