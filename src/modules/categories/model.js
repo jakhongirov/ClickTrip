@@ -79,7 +79,7 @@ const updateCategory = (
          categories
       SET
          category_name = $2,
-         category_lang = $3
+         category_lang = $3,
          category_image_url = $4,
          category_image_name = $5
       WHERE
