@@ -42,6 +42,14 @@ const getTripsList = (
          agencies b
       ON
          a.agency_id = b.agency_id
+      INNER JOIN
+         tour_destinations c
+      ON
+         a.destination_id = c.destination_id
+      INNER JOIN
+         fly_cities d
+      ON
+         a.city_id = d.city_id
       WHERE
          trip_active = true
          ${destination_id ? `and destination_id = ${destination_id}` : ""}
