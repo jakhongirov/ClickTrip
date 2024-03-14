@@ -89,7 +89,7 @@ const updateCountry = (
          fly_countries
       SET
          country_name = $2,
-         counrty_lang = $3
+         counrty_lang = $3,
          counrty_image_url = $4,
          counrty_image_name = $5
       WHERE
