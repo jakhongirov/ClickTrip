@@ -4,11 +4,12 @@ const path = require('path')
 const FS = require('../../lib/fs/fs')
 
 const addPriceToHotels = (hotels, prices) => {
+   console.log(prices);
    return hotels.map(hotel => {
-      const priceEntry = prices.find(entry => entry.id === hotel.hotel_id);
-      console.log(priceEntry.price);
+      const priceEntry = prices.find(entry => entry.id == hotel.hotel_id);
+      console.log(priceEntry);
       if (priceEntry) {
-         return { ...hotel, price: priceEntry.price };
+         return { ...hotel, price: priceEntry?.price };
       } else {
          return hotel;
       }
