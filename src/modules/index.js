@@ -35,7 +35,7 @@ router
    // AGENCIES API
    .get('/agencies/list', AUTH, agencies.GET)
    .post('/agency/add', AUTH, FileUpload.single("photo"), agencies.POST)
-   .put('/agency/login', agencies.LOGIN)
+   .post('/agency/login', agencies.LOGIN)
    .put('/agency/edit', AUTH, FileUpload.single("photo"), agencies.UPDATE)
    .delete('/agency/delete', AUTH, agencies.DELETE)
 
