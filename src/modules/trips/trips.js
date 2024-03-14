@@ -6,6 +6,7 @@ const FS = require('../../lib/fs/fs')
 const addPriceToHotels = (hotels, prices) => {
    return hotels.map(hotel => {
       const priceEntry = prices.find(entry => entry.id === hotel.hotel_id);
+      console.log(priceEntry.price);
       if (priceEntry) {
          return { ...hotel, price: priceEntry.price };
       } else {
