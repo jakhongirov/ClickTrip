@@ -118,6 +118,8 @@ module.exports = {
             const hotels = foundTrip.trip_hotels.map(hotel => hotel.id);
             const foundHotels = await model.foundHotels(hotels)
             const hotelsWithPrice = addPriceToHotels(foundHotels, foundTrip.trip_hotels);
+            
+            console.log(hotelsWithPrice);
 
             if (foundTrip) {
                return res.status(200).json({
