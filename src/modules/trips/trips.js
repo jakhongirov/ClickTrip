@@ -114,12 +114,13 @@ module.exports = {
 
          if (id) {
             const foundTrip = await model.foundTrip(id)
-            const foundCategories = await model.foundCategories(foundTrip?.category_id)
-            const hotels = foundTrip.trip_hotels.map(hotel => hotel.id);
-            const foundHotels = await model.foundHotels(hotels)
-            const hotelsWithPrice = addPriceToHotels(foundHotels, foundTrip.trip_hotels);
 
             if (foundTrip) {
+               const foundCategories = await model.foundCategories(foundTrip?.category_id)
+               const hotels = foundTrip.trip_hotels.map(hotel => hotel.id);
+               const foundHotels = await model.foundHotels(hotels)
+               const hotelsWithPrice = addPriceToHotels(foundHotels, foundTrip.trip_hotels);
+               
                return res.status(200).json({
                   status: 200,
                   message: "Success",
