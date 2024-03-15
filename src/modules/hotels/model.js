@@ -132,7 +132,7 @@ const updateHotel = (
          hotel_location = $5,
          hotel_country = $6,
          hotel_city = $7,
-         hotel_lang = $8
+         hotel_lang = $8,
          hotel_image_url = $9,
          hotel_image_name = $10
       WHERE
