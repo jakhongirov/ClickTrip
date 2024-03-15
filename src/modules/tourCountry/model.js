@@ -91,7 +91,7 @@ const updateTourCountries = (
          country_name = $2,
          country_viza_text = $3,
          country_viza = $4,
-         country_lang = $5
+         country_lang = $5,
          country_image_url = $6,
          country_image_name = $7
       WHERE
