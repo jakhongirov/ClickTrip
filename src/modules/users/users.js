@@ -46,7 +46,10 @@ module.exports = {
             user_phone_number,
             user_location,
             user_os,
-            trip_id
+            trip_id,
+            hotel_id,
+            hotel_name,
+            hotel_price
          } = req.body
 
          const addUser = await model.addUser(
@@ -60,7 +63,7 @@ module.exports = {
             const foundTrip = await model.foundTrip(trip_id)
             const apiUrl = `https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage`;
             const message = `
-               name: ${user_name}\nphone: ${user_phone_number}\nTrip name: ${foundTrip?.trip_name}\nTrip id: ${foundTrip?.trip_id}
+               Name: ${user_name}\nPhone: ${user_phone_number}\nTrip name: ${foundTrip?.trip_name}\nTrip id: ${foundTrip?.trip_id}\nHotel id: ${hotel_id}\nHotel name: ${hotel_name}\nHotel price: ${hotel_price}
             `
             axios.post(apiUrl, {
                chat_id: process.env.CHAT_ID,
