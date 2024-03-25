@@ -30,7 +30,8 @@ const addUser = (
    user_name,
    user_phone_number,
    user_location,
-   user_os
+   user_os,
+   trip_id
 ) => {
    const QUERY = `
       INSERT INTO
@@ -38,12 +39,14 @@ const addUser = (
             user_name,
             user_phone_number,
             user_location,
-            user_os
+            user_os,
+            user_trip
          ) VALUES (
             $1,
             $2,
             $3,
-            $4
+            $4,
+            $5
          ) RETURNING *;
    `;
 
@@ -52,7 +55,8 @@ const addUser = (
       user_name,
       user_phone_number,
       user_location,
-      user_os
+      user_os,
+      trip_id
    )
 }
 

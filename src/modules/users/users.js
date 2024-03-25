@@ -56,7 +56,8 @@ module.exports = {
             user_name,
             user_phone_number,
             user_location,
-            user_os
+            user_os,
+            trip_id
          )
 
          if (addUser) {
