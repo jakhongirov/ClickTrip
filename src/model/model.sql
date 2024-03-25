@@ -23,6 +23,7 @@ CREATE TABLE users (
    user_location text,
    user_lang text,
    user_bookmarks int [],
+   user_trip int DEFAULT 0,
    user_create_at timestamptz DEFAULT CURRENT_TIMESTAMP
 );
 
